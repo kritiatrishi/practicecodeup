@@ -74,6 +74,18 @@ public class BinarySearchTree {
         }
         return Math.abs(height(node.left) - height(node.right)) <= 1 && balanced(node.left) && balanced(node.right);
     }
+    public void populatedSorted(int[] nums){
+        populatedSorted(nums,0,nums.length);
+    }
+    private void populatedSorted(int[] nums,int start,int end){
+        if(start>=end){
+            return;
+        }
+        int mid=start+(end-start)/2;
+        this.insert(nums[mid]);
+        populatedSorted(nums,start,mid);
+        populatedSorted(nums,mid+1,end);
+    }
     public void populate(int[] nums){
         for (int i = 0; i < nums.length; i++) {
             this.insert(nums[i]);
@@ -82,7 +94,10 @@ public class BinarySearchTree {
     public static void main(String[] args) {
     BinarySearchTree tree=new BinarySearchTree();
     int[] a={5,2,1,9,7,10,3,6};
+    int[] b={1,2,3,4,5,6,7,8};
     tree.populate(a);
+    tree.display();
+    tree.populatedSorted(b);
     tree.display();
     }
 }
