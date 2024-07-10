@@ -30,6 +30,7 @@ public class Main {
 
 
 
+
     }
     public static int averageOfArr(int[] nums, int s){
         int ctr=0;
