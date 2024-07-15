@@ -1,5 +1,6 @@
 package org.practice.collection;
 
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.HashSet;
 // custom hashmap using hash methods
@@ -35,25 +36,25 @@ public class HashMaps {
             }
         }
     //-------------------------------------------------------------
-    //RabinKarp String Matching
+    //RabinKarp String Matching--change long to double avoid casting
     //-------------------------------------------------------------
     private final int PRIME=101;
-    public long calculateHash(String s){
-        long hash=0;
+    public double calculateHash(String s){
+        double hash=0;
         for (int i = 0; i < s.length(); i++) {
-            hash= (long) (hash+s.charAt(i)*Math.pow(PRIME,i));
+            hash= (hash+s.charAt(i)*Math.pow(PRIME,i));
         }
         return hash;
     }
-    public long updateHash(long prevHash,char oldC,char newC,int patternLength){
-        long newHash=(prevHash-oldC)/PRIME;
-        newHash=newHash+newC*(long)Math.pow(PRIME,patternLength-1);
+    public double updateHash(double prevHash,char oldC,char newC,int patternLength){
+        double newHash=(prevHash-oldC)/PRIME;
+        newHash=newHash+newC*Math.pow(PRIME,patternLength-1);
         return newHash;
     }
     public void search(String text,String pattern){
         int patternLength=pattern.length();
-        long patternHash=calculateHash(pattern);
-        long textHash=calculateHash(text.substring(0,patternLength));
+        double patternHash=calculateHash(pattern);
+        double textHash=calculateHash(text.substring(0,patternLength));
         for (int i = 0; i < text.length()-patternLength; i++) {
             if(textHash==patternHash){
                 if(text.substring(i,i+patternLength).equals(pattern)){
@@ -65,7 +66,36 @@ public class HashMaps {
             }
         }
     }
+    //-----------------------------------------------------------------
+    //------------------COUNTSORT--------------------------------------
+    public static void countSort(int[] arr){
+        if(arr==null||arr.length<=1){
+            return;
+        }
+        int max=arr[0];
+        for(int num: arr){
+            if(num>max){
+                max=num;
+            }
+        }
+        int[] countArr=new int[max+1];
+        for (int num:arr){
+            countArr[num]++;
+        }
+        int index=0;
+        for (int i=0;i<=max;i++){
+            while(countArr[i]>0){
+                arr[index]=i;
+                index++;
+                countArr[i]--;
+            }
+        }
+    }
+    public static void countSortHash(int[] arr){}
     public static void main(String[] args) {
+        int[] a={4,7,0,2,4,68,4};
+        countSort(a);
+        System.out.println(Arrays.toString(a));
         HashMap<String,Integer> map=new HashMap<>();
         HashMaps maps=new HashMaps();
         maps.put("apl","ios");
@@ -87,7 +117,7 @@ public class HashMaps {
         System.out.println(set);
         System.out.println("--------------------------------");
         System.out.println("--------------------------------");
-        maps.search("fwnshuirgsfubj","fub");
+        maps.search("fwnshuirgsfubj","sfub");
         System.out.println("--------------------------------");
     }
 }
